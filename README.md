@@ -20,6 +20,8 @@ Ansible Role for Proxmox PVE Server configuration and Tools
 * Postfix Mail Alert Configuration
 * ZFS Latency Monitoring
 * PVE Network Configuration
+* LXC Template Download
+* PVE DNS and Domain configuration
 
 All Fetures are tested and working with Proxmox version 7.x and 8.x.
 
@@ -93,6 +95,12 @@ If set to `true`, old and unused Debian/PVE Kernel will be removed.
 
 ### Tools
 
+#### LLDP
+
+    tools_lldp: false
+
+If enabled, LLDP will be installed and activated at boot.
+
 #### Cockpit as ZFS UI
 
     tools_cockpit: false
@@ -104,6 +112,14 @@ If enabled, Cockpit with ZFS Manager Plugin will be installed to manage ZFS from
 ### Use default values
 
     - hosts: all
+      roles:
+        - role: thost96.proxmox
+
+### Install LLDP Tool
+
+    - hosts: all
+      vars:
+        tools_lldp: true
       roles:
         - role: thost96.proxmox
 

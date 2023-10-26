@@ -12,6 +12,8 @@
       file:
         path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
         state: touch
+        access_time: preserve
+        modification_time: preserve
     # All APT Tasks
     - name: Update apt cache.
       apt:
@@ -30,18 +32,18 @@
         disable_subscription_popup: true
         disable_enterprise_repo: true
         enable_no_subscription_repo: true
+        system_upgrades: true
+        tools_lldp: true
         # Additional pre-task neccessary for influx and graphite / or file validation only
-        metrics_influx: true
+        metrics_influx: false
         metrics_influx_server: "influx"
         metrics_influx_port: 8089
-        metrics_graphite: true
+        metrics_graphite: false
         metrics_graphite_server: "graphite"
-        metrics_graphite_port: 2003        
-        system_upgrades: true
+        metrics_graphite_port: 2003
         # Not yet implemented
         system_kernel_upgrade: false
         # Not yet implemented
         system_kernel_clean: false
         # Not yet implemented
         tools_cockpit: false
-        tools_lldp: true        

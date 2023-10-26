@@ -27,26 +27,6 @@
         state: present
   when: "enable_no_subscription_repo | bool"
 
-- name: Configure InfluxDB Metric Server
-  copy:
-    dest: "/etc/pve/status.cfg"
-    content: |
-      influxdb: 
-        server {{ metrics_influx_server }}
-        port {{ metrics_influx_port }}
-    backup: yes
-  when: "metrics_influx | bool"
-    
-- name: Configure Graphite Metric Server
-  copy:
-    dest: "/etc/pve/status.cfg"
-    content: |
-      graphite: 
-        server {{ metrics_graphite_server }}
-        port {{ metrics_graphite_port }}
-    backup: yes
-  when: "metrics_graphite | bool"
-
 - name: Perform PVE Upgrades
   apt:
     update_cache: yes
@@ -71,6 +51,26 @@
         enabled: true
         name: lldpd.service
   when: "tools_lldp | bool"
+
+- name: Configure InfluxDB Metric Server
+  copy:
+    dest: "/etc/pve/status.cfg"
+    content: |
+      influxdb: 
+        server {{ metrics_influx_server }}
+        port {{ metrics_influx_port }}
+    backup: yes
+  when: "metrics_influx | bool"
+    
+- name: Configure Graphite Metric Server
+  copy:
+    dest: "/etc/pve/status.cfg"
+    content: |
+      graphite: 
+        server {{ metrics_graphite_server }}
+        port {{ metrics_graphite_port }}
+    backup: yes
+  when: "metrics_graphite | bool"
 
 - name: Cockpit ZFS Tools Setup
   block:
