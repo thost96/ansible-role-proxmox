@@ -11,7 +11,7 @@ Ansible Role for Proxmox PVE Server configuration and Tools
 * Enable no-subscription Repository
 * InfluxDB and Graphite Metric Server configuration
 
-### Planned Features / in Developement:
+### Planned Features / in Developement
 * System Apt and Kernel Upgrades incl. old Kernel cleanup
 * ZFS / Cockpit Install and Setup
 * LLDP Install
@@ -36,13 +36,13 @@ If PVE Subscrition Warning Popup should be removed or not.
 
     disable_enterprise_repo: true
 
-Disable PVE Enterprise Repository when no license is installed or leave it enabled (license required). 
+Disable PVE Enterprise Repository when no license is installed or leave it enabled (license required).
 
 ### Enable no-subscription Repository
 
     enable_no_subscription_repo: true
 
-Enable PVE no Subscription Repository (no Proxmox licsense required). 
+Enable PVE no Subscription Repository (no Proxmox licsense required).
 
 ### PVE System Upgrades
 
@@ -58,7 +58,7 @@ Enables Metric Server Support for InfluxDB. The following two options then must 
 
     metrics_influx_server: influx
 
-IP Address or Hostname of InfluxDB Server. 
+IP Address or Hostname of InfluxDB Server.
 
     metrics_influx_port: 8089
 
@@ -72,7 +72,7 @@ Enables Metric Server Support for Graphite. The following two options then must 
 
     metrics_graphite_server: graphite
 
-IP Address or Hostname of Graphite Server. 
+IP Address or Hostname of Graphite Server.
 
     metrics_graphite_port: 2003
 
@@ -82,21 +82,21 @@ Port used by Graphite Server. Defaults to `2003`.
 
     system_kernel_upgrade: false
 
-If set to `true`, Debian/PVE Kernel will be updated. 
+If set to `true`, Debian/PVE Kernel will be updated.
 
 ### Kernel cleanup
 
     system_kernel_clean: false
 
-If set to `true`, old and unused Debian/PVE Kernel will be removed. 
+If set to `true`, old and unused Debian/PVE Kernel will be removed.
 
-### Tools 
+### Tools
 
 #### Cockpit as ZFS UI
 
     tools_cockpit: false
 
-If enabled, Cockpit with ZFS Manager Plugin will be installed to manage ZFS from UI on Port 9090. 
+If enabled, Cockpit with ZFS Manager Plugin will be installed to manage ZFS from UI on Port 9090.
 
 ## Example Playbook
 
@@ -127,9 +127,9 @@ If enabled, Cockpit with ZFS Manager Plugin will be installed to manage ZFS from
         - role: thost96.proxmox
 
 ## Version Schema
-```
-<major>.<feature>.<fix>
-```
+
+    <major>.<feature>.<fix>
+
 * Major version can include breaking changes
 * Feature version adds new Features
 * Fix version are only smaller changes
