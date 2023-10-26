@@ -123,7 +123,7 @@
         line: '^root'
         state: absent
       notify: restart-cockpit
-   when: "tools_cockpit | bool"
+  when: "tools_cockpit | bool"
 
 #  - name: Cleanup old Debian/PVE kernels
 #     block: 
