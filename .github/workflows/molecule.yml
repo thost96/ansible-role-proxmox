@@ -1,11 +1,11 @@
 ---
-name: Molecule Lint and Test
+name: Molecule Test
 
 'on':
   push:
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

@@ -10,3 +10,12 @@
       when: ansible_os_family == 'Debian'
   roles:
     - role: thost96.proxmox
+      vars:
+        disable_subscription_popup: false
+        disable_enterprise_repo: true
+        enable_no_subscription_repo: true
+        system_upgrades: false
+        system_kernel_upgrade: false
+        system_kernel_clean: false
+        tools_cockpit: false
+        tools_lldp: false
