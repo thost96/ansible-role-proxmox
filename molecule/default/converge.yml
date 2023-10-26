@@ -7,7 +7,7 @@
     - name: Create JS File
       file:
         dest: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
-        state: present
+        state: file
     # All APT Tasks
     - name: Update apt cache.
       apt:
