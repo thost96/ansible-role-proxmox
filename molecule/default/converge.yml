@@ -4,9 +4,13 @@
   become: true
   pre_tasks:
     # Subscription Popup 
+    - name: Create JS directory
+      file:
+        path: /usr/share/javascript/proxmox-widget-toolkit
+        state: directory
     - name: Create JS File
       file:
-        dest: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+        path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
         state: file
     # All APT Tasks
     - name: Update apt cache.
@@ -17,7 +21,7 @@
     # InfluxDB / Graphite Metrics
     - name: Create proxmox config directory
       file:
-        dest: /etc/pve
+        path: /etc/pve
         state: directory
   roles:
     - role: thost96.proxmox
