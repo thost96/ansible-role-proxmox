@@ -41,28 +41,28 @@
     backup: yes
   when: "metrics_graphite | bool"
 
-
 - name: Perform PVE Upgrades
   apt:
     update_cache: yes
     cache_valid_time: 3600
     upgrade: dist
+    autoremove: true
   when: "system_upgrades | bool"
   retries: 2
   register: _system_upgrade
   until: _system_upgrade is succeeded
 
-- name: "Collect kernel package information"
-  collect_kernel_info:
-  register: _pve_kernel
-  when: "system_kernel_clean | bool"
+# - name: "Collect kernel package information"
+#   collect_kernel_info:
+#   register: _pve_kernel
+#   when: "system_kernel_clean | bool"
 
-- name: Cleanup old Debian/PVE kernels
-  apt:
-    name: "{{ ['linux-image-amd64'] + _pve_kernel.old_packages }}"
-    state: absent
-    purge: yes
-  when: "system_kernel_clean | bool"
+# - name: Cleanup old Debian/PVE kernels
+#   apt:
+#     name: "{{ ['linux-image-amd64'] + _pve_kernel.old_packages }}"
+#     state: absent
+#     purge: yes
+#   when: "system_kernel_clean | bool"
 
 - name: Cockpit ZFS Tools Setup
   include_tasks:

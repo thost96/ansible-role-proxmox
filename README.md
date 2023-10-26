@@ -1,6 +1,10 @@
 # ansible-role-proxmox
 Ansible Role for Proxmox PVE Server configuration and Tools
 
+[![Release](https://github.com/thost96/ansible-role-proxmox/actions/workflows/release.yml/badge.svg)](https://github.com/thost96/ansible-role-proxmox/actions/workflows/release.yml)
+[![Lint](https://github.com/thost96/ansible-role-proxmox/actions/workflows/lint.yml/badge.svg)](https://github.com/thost96/ansible-role-proxmox/actions/workflows/lint.yml)
+[![Molecule Lint and Test](https://github.com/thost96/ansible-role-proxmox/actions/workflows/molecule.yml/badge.svg)](https://github.com/thost96/ansible-role-proxmox/actions/workflows/molecule.yml)
+
 ## Features
 * Disable Proxmox Subscription Warning
 * Disable Enterprise Repository
@@ -44,13 +48,13 @@ Enable PVE no Subscription Repository (no Proxmox licsense required).
 
     system_upgrades: false
 
-If enabled, Proxmox Server APT Updates will automatically installed and old packages removed. 
+If enabled, Proxmox Server APT Updates will automatically installed and old packages removed.
 
 ### Influx Metrics
 
     metrics_influx: false
 
-Enable Metric Server Support for InfluxDB. The following two options then must be specified:
+Enables Metric Server Support for InfluxDB. The following two options then must be specified:
 
     metrics_influx_server: influx
 
@@ -58,13 +62,13 @@ IP Address or Hostname of InfluxDB Server.
 
     metrics_influx_port: 8089
 
-Port used by InfluxDB Server.
+Port used by InfluxDB Server. Defaults to `8089`.
 
 ### Graphite Metrics
 
     metrics_graphite: false
 
-Enable Metric Server Support for Graphite. The following two options then must be specified:
+Enables Metric Server Support for Graphite. The following two options then must be specified:
 
     metrics_graphite_server: graphite
 
@@ -72,16 +76,19 @@ IP Address or Hostname of Graphite Server.
 
     metrics_graphite_port: 2003
 
-Port used by Graphite Server.
+Port used by Graphite Server. Defaults to `2003`.
 
-### System Upgrades
-
-    system_upgrades: false
+### Kernel Upgrade
 
     system_kernel_upgrade: false
 
+If set to `true`, Debian/PVE Kernel will be updated. 
+
+### Kernel cleanup
+
     system_kernel_clean: false
 
+If set to `true`, old and unused Debian/PVE Kernel will be removed. 
 
 ### Tools 
 
