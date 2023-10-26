@@ -119,6 +119,14 @@ If enabled, Cockpit with ZFS Manager Plugin will be installed to manage ZFS from
       roles:
         - role: thost96.proxmox
 
+## Version Schema
+```
+<major>.<feature>.<fix>
+```
+* Major version can include breaking changes
+* Feature version adds new Features
+* Fix version are only smaller changes
+
 ## License
 
 MIT / BSD

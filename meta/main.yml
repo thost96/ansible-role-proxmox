@@ -2,6 +2,7 @@
 galaxy_info:
   author: Thorsten Reichelt
   role_name: proxmox
+  namespace: thost96
   description: Ansible Role for Proxmox PVE Server configuration and Tools
   issue_tracker_url: https://github.com/thost96/ansible-role-proxmox/issues
   license: GPLv2
