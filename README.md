@@ -10,11 +10,12 @@ Ansible Role for Proxmox PVE Server configuration and Tools
 * Disable Enterprise Repository
 * Enable no-subscription Repository
 * InfluxDB and Graphite Metric Server configuration
+* LLDP Install
+* System Apt Upgrades
 
 ### Planned Features / in Developement
-* System Apt and Kernel Upgrades incl. old Kernel cleanup
+* Kernel Upgrades incl. old Kernel cleanup
 * ZFS / Cockpit Install and Setup
-* LLDP Install
 * InfluxDB Metrics using HTTP/HTTPS
 * Postfix Mail Alert Configuration
 * ZFS Latency Monitoring
