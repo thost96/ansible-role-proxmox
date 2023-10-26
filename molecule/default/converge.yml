@@ -5,21 +5,25 @@
   pre_tasks:
     # Subscription Popup 
     - name: Create JS directory
+      ignore_errors: true
       file:
         path: /usr/share/javascript/proxmox-widget-toolkit
         state: directory
     - name: Create JS File
+      ignore_errors: true
       file:
         path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
-        state: file
+        state: touch
     # All APT Tasks
     - name: Update apt cache.
+      ignore_errors: true
       apt:
         update_cache: true
         cache_valid_time: 600
       when: ansible_os_family == 'Debian'
     # InfluxDB / Graphite Metrics
     - name: Create proxmox config directory
+      ignore_errors: true
       file:
         path: /etc/pve
         state: directory
