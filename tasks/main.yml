@@ -15,10 +15,15 @@
   when: "disable_enterprise_repo | bool"
 
 - name: Enable PVE no Subcription Repository
-  apt_repository:
-    repo: "deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-no-subscription"
-    filename: pve-no-subscription
-    state: present
+  block:
+    - ansible.builtin.apt_key:
+        url: https://enterprise.proxmox.com/debian/proxmox-release-bullseye.gpg
+        keyring: /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg
+        state: present
+    - apt_repository:
+        repo: "deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-no-subscription"
+        filename: pve-no-subscription
+        state: present
   when: "enable_no_subscription_repo | bool"
 
 - name: Configure InfluxDB Metric Server
@@ -52,17 +57,15 @@
   register: _system_upgrade
   until: _system_upgrade is succeeded
 
-# - name: "Collect kernel package information"
-#   collect_kernel_info:
-#   register: _pve_kernel
-#   when: "system_kernel_clean | bool"
-
-# - name: Cleanup old Debian/PVE kernels
-#   apt:
-#     name: "{{ ['linux-image-amd64'] + _pve_kernel.old_packages }}"
-#     state: absent
-#     purge: yes
-#   when: "system_kernel_clean | bool"
+#  - name: Cleanup old Debian/PVE kernels
+#     block: 
+#       - collect_kernel_info:
+#         register: _pve_kernel
+#       - apt:
+#           name: "{{ ['linux-image-amd64'] + _pve_kernel.old_packages }}"
+#           state: absent
+#           purge: yes
+#    when: "system_kernel_clean | bool"
 
 - name: Cockpit ZFS Tools Setup
   include_tasks:

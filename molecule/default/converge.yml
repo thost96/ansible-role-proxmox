@@ -10,12 +10,17 @@
       when: ansible_os_family == 'Debian'
   roles:
     - role: thost96.proxmox
+      ignore_errors: true
       vars:
+        # Additional pre-task neccessary
         disable_subscription_popup: false
         disable_enterprise_repo: true
         enable_no_subscription_repo: true
-        system_upgrades: false
+        # Additional pre-task neccessary for influx and graphite / or file validation only
+        system_upgrades: true
+        # Not yet implemented
         system_kernel_upgrade: false
+        # Not yet implemented
         system_kernel_clean: false
-        tools_cockpit: false
-        tools_lldp: false
+        tools_cockpit: true
+        tools_lldp: true
