@@ -22,5 +22,6 @@
         system_kernel_upgrade: false
         # Not yet implemented
         system_kernel_clean: false
-        tools_cockpit: true
+        # Not yet implemented
+        tools_cockpit: false
         tools_lldp: true

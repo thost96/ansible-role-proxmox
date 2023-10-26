@@ -67,7 +67,21 @@
 #           purge: yes
 #    when: "system_kernel_clean | bool"
 
-- name: Cockpit ZFS Tools Setup
-  include_tasks:
-    cockpit.yaml
-  when: "tools_cockpit | bool"
+- name: LLDP Tool Setup
+  block:
+    - name: Install LLDP
+      ansible.builtin.package:
+        name:
+          - lldpd
+        state: present
+    - name: Start and Enable LLDP Daemon
+      ansible.builtin.systemd:
+        state: started
+        enabled: true
+        name: lldpd.service
+  when: "tools_lldp | bool"
+
+# - name: Cockpit ZFS Tools Setup
+#   include_tasks:
+#     cockpit.yaml
+#   when: "tools_cockpit | bool"
