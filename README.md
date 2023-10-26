@@ -11,7 +11,7 @@ Ansible Role for Proxmox PVE Server configuration and Tools
 * Enable no-subscription Repository
 * InfluxDB and Graphite Metric Server configuration
 * LLDP Install
-* System Apt Upgrades
+* System APT Upgrades
 
 ### Planned Features / in Developement
 * Kernel Upgrades incl. old Kernel cleanup

@@ -3,6 +3,11 @@
   hosts: all
   become: true
   pre_tasks:
+    # Subscription Popup 
+    - name: Create JS File
+      file:
+        dest: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+        state: present
     # All APT Tasks
     - name: Update apt cache.
       apt:
@@ -18,11 +23,16 @@
     - role: thost96.proxmox
       ignore_errors: true
       vars:
-        # Additional pre-task neccessary
-        disable_subscription_popup: false
+        disable_subscription_popup: true
         disable_enterprise_repo: true
         enable_no_subscription_repo: true
         # Additional pre-task neccessary for influx and graphite / or file validation only
+        metrics_influx: true
+        metrics_influx_server: "influx"
+        metrics_influx_port: 8089
+        metrics_graphite: true
+        metrics_graphite_server: "graphite"
+        metrics_graphite_port: 2003        
         system_upgrades: true
         # Not yet implemented
         system_kernel_upgrade: false
@@ -30,4 +40,4 @@
         system_kernel_clean: false
         # Not yet implemented
         tools_cockpit: false
-        tools_lldp: true
+        tools_lldp: true        
