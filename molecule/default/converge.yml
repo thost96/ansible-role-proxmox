@@ -3,11 +3,17 @@
   hosts: all
   become: true
   pre_tasks:
+    # All APT Tasks
     - name: Update apt cache.
       apt:
         update_cache: true
         cache_valid_time: 600
       when: ansible_os_family == 'Debian'
+    # InfluxDB / Graphite Metrics
+    - name: Create proxmox config directory
+      file:
+        dest: /etc/pve
+        state: directory
   roles:
     - role: thost96.proxmox
       ignore_errors: true
