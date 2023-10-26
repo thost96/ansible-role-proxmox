@@ -1,0 +1,50 @@
+---
+- name: Install required system packages
+  ansible.builtin.package:
+    name:
+      - curl
+      - samba
+      - git
+    state: present
+
+- name: Disable Samba service
+  ansible.builtin.systemd:
+    state: stopped
+    enabled: false
+    name: smd.service
+
+- name: Add Debian Backports
+  ansible.builtin.apt_repository:
+    repo: deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main
+    state: present
+
+- name: Install Cockpit
+  ansible.builtin.apt:
+    name:
+      - cockpit
+    update_cache: true
+    cache_valid_time: 3600
+    state: present
+
+- name: Enable Cockpit service
+  ansible.builtin.systemd:
+    state: started
+    enabled: true
+    name: cockpit.service
+
+- name: Download Cockpit ZFS Manager
+  ansible.builtin.git:
+    repo: https://github.com/optimans/cockpit-zfs-manager.git
+    dest: /tmp/cockpit-zfs-manager
+
+- name: Copy Cockpit ZFS Manager
+  ansible.builtin.copy:
+    src: /tmp/cockpit-zfs-manager/zfs
+    dest: /usr/share/cockpit
+
+- name: Enable Cockpit Root Login
+  ansible.builtin.lineinfile:
+    path: /etc/cockpit/disallowed-users
+    line: '^root'
+    state: absent
+  notify: restart-cockpit

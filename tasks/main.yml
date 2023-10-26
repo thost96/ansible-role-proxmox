@@ -1,0 +1,70 @@
+---
+- name: Remove Proxmox Subcription Popup
+  replace:
+    path: "/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js"
+    regexp: 'res[\s\n]*\.data\.status\.toLowerCase\(\) !== .active.'
+    replace: "false"
+    backup: yes
+  notify: restart-pveproxy
+  when: "disable_subscription_popup | bool"
+
+- name: Disable PVE Enterprise Repository
+  file:
+    path: /etc/apt/sources.list.d/pve-enterprise.list
+    state: absent
+  when: "disable_enterprise_repo | bool"
+
+- name: Enable PVE no Subcription Repository
+  apt_repository:
+    repo: "deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-no-subscription"
+    filename: pve-no-subscription
+    state: present
+  when: "enable_no_subscription_repo | bool"
+
+- name: Configure InfluxDB Metric Server
+  file:
+    dest: "/etc/pve/status.cfg"
+    content: |
+      influxdb: 
+        server {{ metrics_influx_server }}
+        port {{ metrics_influx_port }}
+    backup: yes
+  when: "metrics_influx | bool"
+    
+- name: Configure Graphite Metric Server
+  file:
+    dest: "/etc/pve/status.cfg"
+    content: |
+      graphite: 
+        server {{ metrics_graphite_server }}
+        port {{ metrics_graphite_port }}
+    backup: yes
+  when: "metrics_graphite | bool"
+
+
+- name: Perform PVE Upgrades
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    upgrade: dist
+  when: "system_upgrades | bool"
+  retries: 2
+  register: _system_upgrade
+  until: _system_upgrade is succeeded
+
+- name: "Collect kernel package information"
+  collect_kernel_info:
+  register: _pve_kernel
+  when: "system_kernel_clean | bool"
+
+- name: Cleanup old Debian/PVE kernels
+  apt:
+    name: "{{ ['linux-image-amd64'] + _pve_kernel.old_packages }}"
+    state: absent
+    purge: yes
+  when: "system_kernel_clean | bool"
+
+- name: Cockpit ZFS Tools Setup
+  include_tasks:
+    cockpit.yaml
+  when: "tools_cockpit | bool"

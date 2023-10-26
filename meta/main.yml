@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Thorsten Reichelt
+  role_name: proxmox
+  description: Ansible Role for Proxmox PVE Server configuration and Tools
+  issue_tracker_url: https://github.com/thost96/ansible-role-proxmox/issues
+  license: GPLv2
+  min_ansible_version: 2.10
+  platforms:
+    - name: Debian
+      versions:
+        - all
+  categories:
+    - system

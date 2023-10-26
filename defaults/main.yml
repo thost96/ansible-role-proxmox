@@ -1,0 +1,20 @@
+---
+disable_subscription_popup: true
+disable_enterprise_repo: true
+enable_no_subscription_repo: true
+metrics_influx: false
+metrics_influx_server: "influx"
+metrics_influx_port: 8089
+metrics_graphite: false
+metrics_graphite_server: "graphite"
+metrics_graphite_port: 2003
+
+system_upgrades: false
+system_kernel_upgrade: false
+system_kernel_clean: false
+
+tools_cockpit: false
+tools_lldp: false
+
+# https://blog.roberthallam.org/2022/09/monitoring-zfs-latencies-in-proxmox-part-1/
+metics_influx_zpool: false
