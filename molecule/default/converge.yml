@@ -9,12 +9,14 @@
       file:
         path: /usr/share/javascript/proxmox-widget-toolkit
         state: directory
+      when: "disable_subscription_popup | bool"
     - name: Create JS File
       file:
         path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
         state: touch
         access_time: preserve
         modification_time: preserve
+      when: "disable_subscription_popup | bool"
     # All APT Tasks
     - name: Update apt cache
       apt:
@@ -26,6 +28,7 @@
       file:
         path: /etc/pve
         state: directory
+      when: "metrics_influx | bool" or "metrics_graphite | bool"
   roles:
     - role: thost96.proxmox
       ignore_errors: true
@@ -35,6 +38,7 @@
         enable_no_subscription_repo: true
         system_upgrades: true
         tools_lldp: true
+        tools_cockpit: true
         # Additional pre-task neccessary for influx and graphite / or file validation only
         metrics_influx: false
         metrics_influx_server: "influx"
@@ -46,5 +50,13 @@
         system_kernel_upgrade: false
         # Not yet implemented
         system_kernel_clean: false
-        # Testing
-        tools_cockpit: true
+  post_tasks:
+    - name: Validate Cockpit version
+      command: cockpit-bridge --version
+      changed_when: false
+      when: "tools_cockpit | bool"
+    
+    - name: Check Cockpit ZFS Plugin dir
+      command: ls -la /usr/share/cockpit/zfs/
+      changed_when: false
+      when: "tools_cockpit | bool"

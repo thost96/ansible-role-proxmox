@@ -85,11 +85,6 @@
         dest: /usr/share/cockpit/
         remote_src: yes
 
-    - name: Cleanup temp files
-      ansible.builtin.file:
-        state: absent
-        path: /tmp/cockpit-zfs-manager
-
     - name: Enable Cockpit Root Login
       ansible.builtin.lineinfile:
         path: /etc/cockpit/disallowed-users
