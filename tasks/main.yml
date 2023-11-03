@@ -57,9 +57,9 @@
     - name: Install required system packages
       ansible.builtin.package:
         name:
-          - curl
           - samba
           - git
+          - cockpit
         state: present
 
     - name: Disable Samba service
@@ -67,19 +67,6 @@
         state: stopped
         enabled: false
         name: smbd.service
-
-    - name: Add Debian Backports
-      ansible.builtin.apt_repository:
-        repo: deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main
-        state: present
-
-    - name: Install Cockpit
-      ansible.builtin.apt:
-        name:
-          - cockpit
-        update_cache: true
-        cache_valid_time: 3600
-        state: present
 
     - name: Enable Cockpit service
       ansible.builtin.systemd:
@@ -97,7 +84,6 @@
         src: /tmp/cockpit-zfs-manager/zfs
         dest: /usr/share/cockpit/
         remote_src: yes
-        directory_mode: yes
 
     - name: Cleanup temp files
       ansible.builtin.file:
