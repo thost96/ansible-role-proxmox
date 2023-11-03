@@ -28,7 +28,7 @@
       file:
         path: /etc/pve
         state: directory
-      when: "metrics_influx | bool" or "metrics_graphite | bool"
+      when: metrics_influx | bool or metrics_graphite | bool
   roles:
     - role: thost96.proxmox
       ignore_errors: true
@@ -51,11 +51,11 @@
         # Not yet implemented
         system_kernel_clean: false
   post_tasks:
+    # Tools - Cockpit
     - name: Validate Cockpit version
       command: cockpit-bridge --version
       changed_when: false
       when: "tools_cockpit | bool"
-    
     - name: Check Cockpit ZFS Plugin dir
       command: ls -la /usr/share/cockpit/zfs/
       changed_when: false
