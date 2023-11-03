@@ -5,6 +5,7 @@ disable_enterprise_repo: true
 enable_no_subscription_repo: true
 system_upgrades: false
 tools_lldp: false
+tools_cockpit: false
 
 # Planned Features / in Developement
 metrics_influx: false
@@ -15,6 +16,5 @@ metrics_graphite_server: "graphite"
 metrics_graphite_port: 2003
 system_kernel_upgrade: false
 system_kernel_clean: false
-tools_cockpit: false
 # https://blog.roberthallam.org/2022/09/monitoring-zfs-latencies-in-proxmox-part-1/
 metics_influx_zpool: false
