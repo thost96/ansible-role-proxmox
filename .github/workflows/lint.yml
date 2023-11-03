@@ -10,9 +10,27 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+
+      - name: Set DEFAULT_BRANCH to PR target
+        if: ${{ github.base_ref != '' }}
+        run: |
+          # shellcheck disable=2086
+          echo "DEFAULT_BRANCH=${{ github.base_ref }}" >> $GITHUB_ENV
+          echo "this is a PR branch. only lint files that are changed"
+
+      - name: Set DEFAULT_BRANCH to current branch
+        if: ${{ github.base_ref == '' }}
+        run: |
+          # shellcheck disable=2086
+          echo "DEFAULT_BRANCH=$(echo '${{ github.ref }}' |
+          sed 's/refs\/heads\///')" >> $GITHUB_ENV
+          echo "this is just a branch push, not a PR."
 
       - name: Lint Code Base
-        uses: github/super-linter@v5.0.0
+        uses: github/super-linter/slim@v5.0.0
         env:
+          DEFAULT_BRANCH: ${{ env.DEFAULT_BRANCH }}
           VALIDATE_ALL_CODEBASE: true
           GITHUB_TOKEN: ${{ secrets.TOKEN }}

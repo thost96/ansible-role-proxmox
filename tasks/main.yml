@@ -52,54 +52,21 @@
         name: lldpd.service
   when: "tools_lldp | bool"
 
-- name: Configure InfluxDB Metric Server
-  copy:
-    dest: "/etc/pve/status.cfg"
-    content: |
-      influxdb: 
-        server {{ metrics_influx_server }}
-        port {{ metrics_influx_port }}
-    backup: yes
-  when: "metrics_influx | bool"
-    
-- name: Configure Graphite Metric Server
-  copy:
-    dest: "/etc/pve/status.cfg"
-    content: |
-      graphite: 
-        server {{ metrics_graphite_server }}
-        port {{ metrics_graphite_port }}
-    backup: yes
-  when: "metrics_graphite | bool"
-
 - name: Cockpit ZFS Tools Setup
   block:
-    - name: Install required system packages
+    - name: Install Cockpit and required packages
       ansible.builtin.package:
         name:
-          - curl
           - samba
           - git
+          - cockpit
         state: present
 
     - name: Disable Samba service
       ansible.builtin.systemd:
         state: stopped
         enabled: false
-        name: smd.service
-
-    - name: Add Debian Backports
-      ansible.builtin.apt_repository:
-        repo: deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main
-        state: present
-
-    - name: Install Cockpit
-      ansible.builtin.apt:
-        name:
-          - cockpit
-        update_cache: true
-        cache_valid_time: 3600
-        state: present
+        name: smbd.service
 
     - name: Enable Cockpit service
       ansible.builtin.systemd:
@@ -115,7 +82,8 @@
     - name: Copy Cockpit ZFS Manager
       ansible.builtin.copy:
         src: /tmp/cockpit-zfs-manager/zfs
-        dest: /usr/share/cockpit
+        dest: /usr/share/cockpit/
+        remote_src: yes
 
     - name: Enable Cockpit Root Login
       ansible.builtin.lineinfile:
@@ -125,8 +93,28 @@
       notify: restart-cockpit
   when: "tools_cockpit | bool"
 
+- name: Configure InfluxDB Metric Server
+  copy:
+    dest: "/etc/pve/status.cfg"
+    content: |
+      influxdb:
+        server {{ metrics_influx_server }}
+        port {{ metrics_influx_port }}
+    backup: yes
+  when: "metrics_influx | bool"
+
+- name: Configure Graphite Metric Server
+  copy:
+    dest: "/etc/pve/status.cfg"
+    content: |
+      graphite:
+        server {{ metrics_graphite_server }}
+        port {{ metrics_graphite_port }}
+    backup: yes
+  when: "metrics_graphite | bool"
+
 #  - name: Cleanup old Debian/PVE kernels
-#     block: 
+#     block:
 #       - collect_kernel_info:
 #         register: _pve_kernel
 #       - apt:
