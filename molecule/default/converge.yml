@@ -54,9 +54,7 @@
     # Tools - Cockpit
     - name: Validate Cockpit version
       command: cockpit-bridge --version
-      changed_when: false
-      when: "tools_cockpit | bool"
+      when: tools_cockpit == true
     - name: Check Cockpit ZFS Plugin dir
       command: ls -la /usr/share/cockpit/zfs/
-      changed_when: false
-      when: "tools_cockpit | bool"
+      when: tools_cockpit == true

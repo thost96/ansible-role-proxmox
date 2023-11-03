@@ -54,7 +54,7 @@
 
 - name: Cockpit ZFS Tools Setup
   block:
-    - name: Install required system packages
+    - name: Install Cockpit and required packages
       ansible.builtin.package:
         name:
           - samba
