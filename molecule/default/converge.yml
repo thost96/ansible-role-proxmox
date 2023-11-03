@@ -45,5 +45,5 @@
         system_kernel_upgrade: false
         # Not yet implemented
         system_kernel_clean: false
-        # Not yet implemented
-        tools_cockpit: false
+        # Testing
+        tools_cockpit: true

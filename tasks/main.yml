@@ -52,26 +52,6 @@
         name: lldpd.service
   when: "tools_lldp | bool"
 
-- name: Configure InfluxDB Metric Server
-  copy:
-    dest: "/etc/pve/status.cfg"
-    content: |
-      influxdb: 
-        server {{ metrics_influx_server }}
-        port {{ metrics_influx_port }}
-    backup: yes
-  when: "metrics_influx | bool"
-    
-- name: Configure Graphite Metric Server
-  copy:
-    dest: "/etc/pve/status.cfg"
-    content: |
-      graphite: 
-        server {{ metrics_graphite_server }}
-        port {{ metrics_graphite_port }}
-    backup: yes
-  when: "metrics_graphite | bool"
-
 - name: Cockpit ZFS Tools Setup
   block:
     - name: Install required system packages
@@ -86,7 +66,7 @@
       ansible.builtin.systemd:
         state: stopped
         enabled: false
-        name: smd.service
+        name: smbd.service
 
     - name: Add Debian Backports
       ansible.builtin.apt_repository:
@@ -124,6 +104,26 @@
         state: absent
       notify: restart-cockpit
   when: "tools_cockpit | bool"
+
+- name: Configure InfluxDB Metric Server
+  copy:
+    dest: "/etc/pve/status.cfg"
+    content: |
+      influxdb: 
+        server {{ metrics_influx_server }}
+        port {{ metrics_influx_port }}
+    backup: yes
+  when: "metrics_influx | bool"
+    
+- name: Configure Graphite Metric Server
+  copy:
+    dest: "/etc/pve/status.cfg"
+    content: |
+      graphite: 
+        server {{ metrics_graphite_server }}
+        port {{ metrics_graphite_port }}
+    backup: yes
+  when: "metrics_graphite | bool"
 
 #  - name: Cleanup old Debian/PVE kernels
 #     block: 
