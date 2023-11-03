@@ -4,7 +4,7 @@
   become: true
   gather_facts: true
   pre_tasks:
-    # Subscription Popup 
+    # Subscription Popup
     - name: Create JS directory
       file:
         path: /usr/share/javascript/proxmox-widget-toolkit
@@ -16,7 +16,7 @@
         access_time: preserve
         modification_time: preserve
     # All APT Tasks
-    - name: Update apt cache.
+    - name: Update apt cache
       apt:
         update_cache: true
         cache_valid_time: 600

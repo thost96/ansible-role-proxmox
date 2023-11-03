@@ -95,7 +95,9 @@
     - name: Copy Cockpit ZFS Manager
       ansible.builtin.copy:
         src: /tmp/cockpit-zfs-manager/zfs
-        dest: /usr/share/cockpit
+        dest: /usr/share/cockpit/
+        remote_src: yes
+        directory_mode: yes
 
     - name: Cleanup temp files
       ansible.builtin.file:
@@ -114,24 +116,24 @@
   copy:
     dest: "/etc/pve/status.cfg"
     content: |
-      influxdb: 
+      influxdb:
         server {{ metrics_influx_server }}
         port {{ metrics_influx_port }}
     backup: yes
   when: "metrics_influx | bool"
-    
+
 - name: Configure Graphite Metric Server
   copy:
     dest: "/etc/pve/status.cfg"
     content: |
-      graphite: 
+      graphite:
         server {{ metrics_graphite_server }}
         port {{ metrics_graphite_port }}
     backup: yes
   when: "metrics_graphite | bool"
 
 #  - name: Cleanup old Debian/PVE kernels
-#     block: 
+#     block:
 #       - collect_kernel_info:
 #         register: _pve_kernel
 #       - apt:
