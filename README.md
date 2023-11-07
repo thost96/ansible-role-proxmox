@@ -115,11 +115,12 @@ If enabled, Cockpit with ZFS Manager Plugin will be installed to manage ZFS from
       roles:
         - role: thost96.proxmox
 
-### Install LLDP Tool
+### Install Tools
 
     - hosts: all
       vars:
         tools_lldp: true
+        tools_cockpit: true
       roles:
         - role: thost96.proxmox
 
