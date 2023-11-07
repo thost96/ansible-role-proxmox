@@ -93,6 +93,13 @@
       notify: restart-cockpit
   when: "tools_cockpit | bool"
 
+- name: Configure DNS Nameserver and Domain
+  template:
+    src: "resolv.conf.j2"
+    dest: "/etc/resolv.conf"
+    mode: "0644"
+  become: true
+  
 - name: Configure InfluxDB Metric Server
   copy:
     dest: "/etc/pve/status.cfg"
@@ -101,7 +108,10 @@
         server {{ metrics_influx_server }}
         port {{ metrics_influx_port }}
     backup: yes
-  when: "metrics_influx | bool"
+  when: 
+    - metrics_influx | bool
+    - metrics_influx_server is defined
+    - metrics_influx_port is defined
 
 - name: Configure Graphite Metric Server
   copy:
@@ -122,3 +132,33 @@
 #           state: absent
 #           purge: yes
 #    when: "system_kernel_clean | bool"
+
+# - name: Download LXC Templates
+#   block:
+      # - name: Set ostemplate storage name
+      #   set_fact:
+      #     pve_ostemplate_storage: '{{ lxccreate_ostemplate.split(":")[0] }}'
+      # - name: Get local ostemplates
+      #   shell: |
+      #     set -o pipefail
+      #     pveam list {{ pve_ostemplate_storage }} | cut -f 1 -d" "
+      #   args:
+      #     executable: /bin/bash
+      #   register: pve_existing_ostemplates
+      #   changed_when: no
+      #   check_mode: no
+      #   become: yes
+      # - name: Update ostemplate list
+        # command: pveam update
+        # changed_when: no
+        # check_mode: no
+        # become: yes
+        # run_once: yes
+      # - command: "pveam download local {{ item }}"
+      #   args:
+      #     creates: /var/lib/vz/template/cache/{{ item }}
+      #   with_items: "{{ pve_templates }}"
+      #   - name: Download required ostemplate # noqa no-changed-when
+      #     command: 'pveam download {{ pve_ostemplate_storage }} {{ lxccreate_ostemplate.split("/")[1] }}'
+      #     become: yes
+      #   when: lxccreate_ostemplate_download and not lxccreate_ostemplate in pve_existing_ostemplates.stdout_lines

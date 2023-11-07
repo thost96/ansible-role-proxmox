@@ -8,3 +8,8 @@
   service:
     name: cockpit
     state: restarted
+
+- name: restart-postfix
+  service:
+    name: postfix
+    state: restarted
