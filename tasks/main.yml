@@ -140,7 +140,8 @@
     - name: Gather running Kernel
       setup:
         gather_subset:
-          - "ansible_kernel"
+          - "kernel"
+          - "kernel_version"
 
     - name: Get installed Kernel versions without running Kernel
       command: dpkg --list | grep 'kernel-.*-pve' | awk '{print $2}' | grep -v "{{ ansible_kernel }}" | sort -V
@@ -151,6 +152,7 @@
         name: "{{ available_kernels }}"
         state: absent
         purge: yes
+      when: "{{ available_kernels }}"
 
     - name: Update GRUB
       command: /usr/sbin/update-grub

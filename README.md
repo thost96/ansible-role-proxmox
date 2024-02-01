@@ -105,10 +105,10 @@ If enabled, LLDP will be installed and activated at boot.
 If enabled, Cockpit with ZFS Manager Plugin will be installed to manage ZFS from UI on Port 9090.
 
 #### Zamba LXC Toolbox
-    
+
     tools_zamba_lxc_toolbox: false
 
-If enabled, Zamba LXC Toolbox from https://github.com/bashclub/zamba-lxc-toolbox will be downloaded and default config generated. 
+If enabled,  [Zamba LXC Toolbox](https://github.com/bashclub/zamba-lxc-toolbox) will be downloaded and default config generated.
 
 (Optional): Default install Path is `/home/root/zamba-lxc-toolbox`. With `tools_zamba_lxc_toolbox_path` this can be changed.
 

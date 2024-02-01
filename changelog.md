@@ -10,6 +10,9 @@
 
 ## Versions
 
+### 1.4.1
+* fixed lint errors
+
 ### 1.4.0
 * added changelog
 * added debian/pve kernel cleanup
