@@ -56,7 +56,7 @@
         # Not yet implemented
         system_kernel_upgrade: false
         # Not yet implemented
-        system_kernel_clean: false        
+        system_kernel_clean: false
   post_tasks:
     # Tools - Cockpit
     - name: Validate Cockpit version

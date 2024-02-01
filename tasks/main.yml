@@ -123,8 +123,10 @@
         state: present
 
     - name: Download Zamba LXC Toolbox
-        repo: https://github.com/bashclub/zamba-lxc-toolbox
+      ansible.builtin.git:
+        repo: https://github.com/bashclub/zamba-lxc-toolbox.git
         dest: "{{ tools_zamba_lxc_toolbox_path }}"
+        update: yes
 
     - name: Copy Toolbox Config
       ansible.builtin.copy:
