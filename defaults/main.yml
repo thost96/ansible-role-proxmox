@@ -6,6 +6,8 @@ enable_no_subscription_repo: true
 system_upgrades: false
 tools_lldp: false
 tools_cockpit: false
+tools_zamba_lxc_toolbox: false
+tools_zamba_lxc_toolbox_path: "/home/root/zamba-lxc-toolbox"
 
 # Planned Features / in Developement
 metrics_influx: false

@@ -12,6 +12,7 @@ Ansible Role for Proxmox PVE Server configuration and Tools
 * LLDP Install
 * System APT Upgrades
 * Cockpit UI Install including ZFS Tools
+* Zamba LXC Toolbox Install
 
 ### Planned Features / in Developement
 * InfluxDB and Graphite Metric Server configuration
@@ -22,6 +23,7 @@ Ansible Role for Proxmox PVE Server configuration and Tools
 * PVE Network Configuration
 * LXC Template Download
 * PVE DNS and Domain configuration
+
 
 All Fetures are tested and working with Proxmox version 7.x and 8.x.
 
@@ -107,6 +109,14 @@ If enabled, LLDP will be installed and activated at boot.
 
 If enabled, Cockpit with ZFS Manager Plugin will be installed to manage ZFS from UI on Port 9090.
 
+#### Zamba LXC Toolbox
+    
+    tools_zamba_lxc_toolbox: false
+
+If enabled, Zamba LXC Toolbox from https://github.com/bashclub/zamba-lxc-toolbox will be downloaded and default config generated. 
+
+(Optional): Default install Path is `/home/root/zamba-lxc-toolbox`. With `tools_zamba_lxc_toolbox_path` this can be changed.
+
 ## Example Playbook
 
 ### Use default values
@@ -121,6 +131,7 @@ If enabled, Cockpit with ZFS Manager Plugin will be installed to manage ZFS from
       vars:
         tools_lldp: true
         tools_cockpit: true
+        tools_zamba_lxc_toolbox: true
       roles:
         - role: thost96.proxmox
 

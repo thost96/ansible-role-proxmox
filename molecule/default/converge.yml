@@ -29,6 +29,12 @@
         path: /etc/pve
         state: directory
       when: metrics_influx | bool or metrics_graphite | bool
+    # Zamba LXC Toolbox
+    - name: Create root home dir
+      file:
+        path: /home/root
+        state: directory
+      when: tools_zamba_lxc_toolbox == true
   roles:
     - role: thost96.proxmox
       ignore_errors: true
@@ -39,6 +45,7 @@
         system_upgrades: true
         tools_lldp: true
         tools_cockpit: true
+        tools_zamba_lxc_toolbox: true
         # Additional pre-task neccessary for influx and graphite / or file validation only
         metrics_influx: false
         metrics_influx_server: "influx"
@@ -49,7 +56,7 @@
         # Not yet implemented
         system_kernel_upgrade: false
         # Not yet implemented
-        system_kernel_clean: false
+        system_kernel_clean: false        
   post_tasks:
     # Tools - Cockpit
     - name: Validate Cockpit version

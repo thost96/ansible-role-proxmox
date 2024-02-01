@@ -45,6 +45,7 @@
         name:
           - lldpd
         state: present
+
     - name: Start and Enable LLDP Daemon
       ansible.builtin.systemd:
         state: started
@@ -112,6 +113,25 @@
         port {{ metrics_graphite_port }}
     backup: yes
   when: "metrics_graphite | bool"
+
+- name: Add Zamba LXC Toolbox
+  block:
+    - name: Install Prerequisites
+      ansible.builtin.package:
+        name:
+          - git
+        state: present
+
+    - name: Download Zamba LXC Toolbox
+        repo: https://github.com/bashclub/zamba-lxc-toolbox
+        dest: "{{ tools_zamba_lxc_toolbox_path }}"
+
+    - name: Copy Toolbox Config
+      ansible.builtin.copy:
+        src: "{{ tools_zamba_lxc_toolbox_path }}/conf/zamba.conf.example"
+        dest: "{{ tools_zamba_lxc_toolbox_path }}/conf/zamba.conf"
+        remote_src: yes
+  when: "tools_zamba_lxc_toolbox | bool"
 
 #  - name: Cleanup old Debian/PVE kernels
 #     block:
