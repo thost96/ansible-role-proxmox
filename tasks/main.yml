@@ -135,12 +135,23 @@
         remote_src: yes
   when: "tools_zamba_lxc_toolbox | bool"
 
-#  - name: Cleanup old Debian/PVE kernels
-#     block:
-#       - collect_kernel_info:
-#         register: _pve_kernel
-#       - apt:
-#           name: "{{ ['linux-image-amd64'] + _pve_kernel.old_packages }}"
-#           state: absent
-#           purge: yes
-#    when: "system_kernel_clean | bool"
+- name: Cleanup old Debian/PVE Kernels
+  block:
+    - name: Gather running Kernel
+      setup:
+        gather_subset:
+          - "ansible_kernel"
+
+    - name: Get installed Kernel versions without running Kernel
+      command: dpkg --list | grep 'kernel-.*-pve' | awk '{print $2}' | grep -v "{{ ansible_kernel }}" | sort -V
+      register: available_kernels
+
+    - name: Remove old Kernel versions
+      apt:
+        name: "{{ available_kernels }}"
+        state: absent
+        purge: yes
+
+    - name: Update GRUB
+      command: /usr/sbin/update-grub
+  when: "system_kernel_clean | bool"

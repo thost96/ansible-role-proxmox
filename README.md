@@ -10,19 +10,20 @@ Ansible Role for Proxmox PVE Server configuration and Tools
 * Disable Enterprise Repository
 * Enable no-subscription Repository
 * LLDP Install
-* System APT Upgrades
+* Proxmox Upgrades
 * Cockpit UI Install including ZFS Tools
 * Zamba LXC Toolbox Install
+* Remove old installed Kernel versions
 
 ### Planned Features / in Developement
 * InfluxDB and Graphite Metric Server configuration
-* Kernel Upgrades incl. old Kernel cleanup
 * InfluxDB Metrics using HTTP/HTTPS
 * Postfix Mail Alert Configuration
 * ZFS Latency Monitoring
 * PVE Network Configuration
 * LXC Template Download
 * PVE DNS and Domain configuration
+* [PBS Post Installation Tasks](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/post-pbs-install.sh)
 
 
 All Fetures are tested and working with Proxmox version 7.x and 8.x.
@@ -53,7 +54,13 @@ Enable PVE no Subscription Repository (no Proxmox licsense required).
 
     system_upgrades: false
 
-If enabled, Proxmox Server APT Updates will automatically installed and old packages removed.
+If enabled, Proxmox Server Updates will automatically installed and old packages removed.
+
+### Kernel cleanup
+
+    system_kernel_clean: false
+
+If set to `true`, old and unused Debian/PVE Kernel will be removed.
 
 ### Influx Metrics
 
@@ -82,18 +89,6 @@ IP Address or Hostname of Graphite Server.
     metrics_graphite_port: 2003
 
 Port used by Graphite Server. Defaults to `2003`.
-
-### Kernel Upgrade
-
-    system_kernel_upgrade: false
-
-If set to `true`, Debian/PVE Kernel will be updated.
-
-### Kernel cleanup
-
-    system_kernel_clean: false
-
-If set to `true`, old and unused Debian/PVE Kernel will be removed.
 
 ### Tools
 
@@ -162,6 +157,8 @@ If enabled, Zamba LXC Toolbox from https://github.com/bashclub/zamba-lxc-toolbox
 * Major version can include breaking changes
 * Feature version adds new Features
 * Fix version are only smaller changes
+
+Changelog is available at [Changelog](changelog.md)
 
 ## License
 

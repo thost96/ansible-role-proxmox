@@ -43,6 +43,7 @@
         disable_enterprise_repo: true
         enable_no_subscription_repo: true
         system_upgrades: true
+        system_kernel_clean: true
         tools_lldp: true
         tools_cockpit: true
         tools_zamba_lxc_toolbox: true
@@ -53,10 +54,6 @@
         metrics_graphite: false
         metrics_graphite_server: "graphite"
         metrics_graphite_port: 2003
-        # Not yet implemented
-        system_kernel_upgrade: false
-        # Not yet implemented
-        system_kernel_clean: false
   post_tasks:
     # Tools - Cockpit
     - name: Validate Cockpit version

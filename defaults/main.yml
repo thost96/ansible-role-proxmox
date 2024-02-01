@@ -8,6 +8,7 @@ tools_lldp: false
 tools_cockpit: false
 tools_zamba_lxc_toolbox: false
 tools_zamba_lxc_toolbox_path: "/home/root/zamba-lxc-toolbox"
+system_kernel_clean: false
 
 # Planned Features / in Developement
 metrics_influx: false
@@ -16,7 +17,5 @@ metrics_influx_port: 8089
 metrics_graphite: false
 metrics_graphite_server: "graphite"
 metrics_graphite_port: 2003
-system_kernel_upgrade: false
-system_kernel_clean: false
 # https://blog.roberthallam.org/2022/09/monitoring-zfs-latencies-in-proxmox-part-1/
 metics_influx_zpool: false
